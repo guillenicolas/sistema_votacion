@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function validarRut() {
+            var rut = document.getElementById('rut').value;
+            rut = rut.replace(/[^k0-9]/gi, ''); // Eliminar caracteres no permitidos
+            var dv = rut.slice(-1); // Obtener el dígito verificador
+            var numero = rut.slice(0, -1); // Obtener el número sin el dígito verificador
+
+            var suma = 0;
+            var multiplo = 2;
+
+            // Recorrer el número de derecha a izquierda
+            for (var i = numero.length - 1; i >= 0; i--) {
+                suma += parseInt(numero.charAt(i)) * multiplo;
+                multiplo = (multiplo + 1) % 8 + 2;
+            }
+
+            var dvr = 11 - (suma % 11);
+
+            if (dvr == 11) {
+                dvr = '0';
+            } else if (dvr == 10) {
+                dvr = 'K';
+            }
+
+            if (dv.toUpperCase() == dvr.toString()) {
+                alert('RUT válido');
+            } else {
+                alert('RUT inválido');
+            }
+        }
+    </script>
+</head>
+<body>
+   
+    
+</body>
+</html>

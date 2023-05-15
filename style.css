@@ -1,0 +1,8 @@
+.checkbox-group {
+    display: flex;
+  }
+  
+  .checkbox-group div {
+    margin-right: 10px;
+  }
+  

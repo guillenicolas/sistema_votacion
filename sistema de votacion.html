@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Votación</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="style.css"></script>
+    <script src="validar_rut.html"></script>
+</head>
+<body>
+    <h1>Formulario de Votación</h1>
+    <form id="voting-form" action="submit.php" method="post">
+        <label for="nombre">Nombre y Apellido:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="alias">Alias:</label>
+        <input type="text" id="alias" name="alias" pattern="^[A-Za-z0-9]{5,}$" required><br><br>
+
+        <label for="rut">RUT:</label>
+        <input type="text" id="rut" name="rut"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="region">Región:</label>
+        <select id="region" name="region" required></select><br><br>
+
+        <label for="comuna">Comuna:</label>
+        <select id="comuna" name="comuna" required></select><br><br>
+
+        <label for="candidato">Candidato:</label>
+        <select id="candidato" name="candidato" required></select><br><br>
+
+        <label class="checkbox-label">Cómo se enteró de nosotros:</label>
+        <div class="checkbox-group">
+          <label for="cbWeb">
+            <input type="checkbox" id="cbWeb" name="entero[]" value="Web">Web
+          </label>
+          <label for="cbTV">
+            <input type="checkbox" id="cbTV" name="entero[]" value="TV">TV
+          </label>
+          <label for="cbRedes">
+            <input type="checkbox" id="cbRedes" name="entero[]" value="Redes">Redes Sociales
+          </label>
+          <label for="cbAmigos">
+            <input type="checkbox" id="cbAmigos" name="entero[]" value="Amigos">Amigos
+          </label>
+        </div>
+
+        <input type="submit" value="votar">
+    </form>
+    <script>
+      $(document).ready(function() {
+          // Cargar candidatos desde la base de datos
+          $.ajax({
+              url: 'cargar_datos.php',
+              type: 'GET',
+              dataType: 'json',
+              success: function(data) {
+                  if (data && data.length > 0) {
+                      var options = '';
+                      data.forEach(function(candidate) {
+                          options += '<option value="' + candidate.id + '">' + candidate.nombre + '</option>';
+                      });
+                      $('#candidato').append(options);
+                  }
+              }
+          });
+      });
+  </script>
+</body>
+</html>
